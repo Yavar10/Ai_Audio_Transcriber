@@ -34,19 +34,19 @@ export default function Login() {
   };
 
   return (
-    <div className="flex min-h-screen items-center justify-center bg-gray-50 p-4">
-      <div className="w-full max-w-md space-y-8 rounded-2xl bg-white p-8 shadow-xl">
-        <div className="text-center">
-          <h2 className="text-3xl font-bold tracking-tight text-gray-900">
-            Admin Login
+    <div className="flex min-h-screen items-center justify-center p-4">
+      <div className="w-full max-w-md space-y-12 border border-[#e2dfd8] shadow-none bg-white/50 backdrop-blur-sm p-12">
+        <div className="text-center space-y-2">
+          <h2 className="text-3xl font-normal tracking-tight serif-brand">
+            Atelier Transcribe
           </h2>
-          <p className="mt-2 text-sm text-gray-600">
-            Sign in to access the transcription dashboard
+          <p className="text-sm text-gray-500 uppercase tracking-widest mt-2">
+            Admin Access
           </p>
         </div>
 
-        <form className="mt-8 space-y-6" onSubmit={handleLogin}>
-          <div className="space-y-4 rounded-md shadow-sm">
+        <form className="space-y-8" onSubmit={handleLogin}>
+          <div className="space-y-6">
             <div>
               <label className="sr-only" htmlFor="email">Email address</label>
               <input
@@ -54,7 +54,7 @@ export default function Login() {
                 name="email"
                 type="email"
                 required
-                className="relative block w-full rounded-md border-0 py-2.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                className="block w-full bg-transparent border-b border-[#e2dfd8] py-2 px-0 text-foreground placeholder:text-gray-400 focus:border-[#2D334A] outline-none rounded-none transition-colors sm:text-sm"
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
@@ -67,7 +67,7 @@ export default function Login() {
                 name="password"
                 type="password"
                 required
-                className="relative block w-full rounded-md border-0 py-2.5 px-3 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:z-10 focus:ring-2 focus:ring-inset focus:ring-blue-600 sm:text-sm sm:leading-6"
+                className="block w-full bg-transparent border-b border-[#e2dfd8] py-2 px-0 text-foreground placeholder:text-gray-400 focus:border-[#2D334A] outline-none rounded-none transition-colors sm:text-sm"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -75,15 +75,15 @@ export default function Login() {
             </div>
           </div>
 
-          {error && <p className="text-sm text-red-600">{error}</p>}
+          {error && <p className="text-sm text-red-600 font-medium">{error}</p>}
 
           <div>
             <button
               type="submit"
               disabled={loading}
-              className="group relative flex w-full justify-center rounded-md bg-blue-600 px-3 py-2.5 text-sm font-semibold text-white hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 disabled:opacity-50"
+              className="w-full bg-[#2D334A] hover:bg-[#1a1f2e] text-white rounded-[4px] px-4 py-3 text-sm font-medium transition-all disabled:opacity-50"
             >
-              {loading ? "Signing in..." : "Sign in"}
+              {loading ? "Authenticating..." : "Sign in"}
             </button>
           </div>
         </form>
