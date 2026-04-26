@@ -27,15 +27,26 @@ export async function POST(req) {
       return NextResponse.json({ error: "No audio file provided" }, { status: 400 });
     }
 
+    const prompt = "Please transcribe this audio. Return only the transcription text.";
+
     // Convert file to buffer and save it temporarily
+    // file.name can be undefined when the blob comes from MediaRecorder, so derive a safe fallback
+    const ext = file.type.includes("ogg") ? "ogg"
+      : file.type.includes("mp4") ? "mp4"
+      : file.type.includes("wav") ? "wav"
+      : file.type.includes("flac") ? "flac"
+      : "webm";
+    const safeName = (file.name && file.name !== "undefined") ? file.name : `audio-${Date.now()}.${ext}`;
     const buffer = Buffer.from(await file.arrayBuffer());
-    const tempFilePath = path.join(os.tmpdir(), `${Date.now()}-${file.name}`);
+    const tempFilePath = path.join(os.tmpdir(), `${Date.now()}-${safeName}`);
     fs.writeFileSync(tempFilePath, buffer);
 
-    // Upload to Gemini
+    // Upload to Gemini — strip codec params (e.g. "audio/webm;codecs=opus" → "audio/webm")
+    // Gemini Files API only accepts the base MIME type
+    const mimeType = (file.type || "audio/webm").split(";")[0].trim();
     let uploadedFile = await ai.files.upload({
       file: tempFilePath,
-      mimeType: file.type,
+      mimeType,
     });
 
     // Clean up temp file immediately after upload
@@ -58,8 +69,8 @@ export async function POST(req) {
         {
           role: "user",
           parts: [
-            { fileData: { fileUri: uploadedFile.uri, mimeType: file.type } },
-            { text: "Please transcribe this audio. Return only the transcription text." }
+            { fileData: { fileUri: uploadedFile.uri, mimeType } },
+            { text: prompt }
           ],
         },
       ],
