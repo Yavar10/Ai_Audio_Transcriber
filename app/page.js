@@ -458,13 +458,13 @@ export default function Home() {
                           className="absolute inset-0 w-20 h-20 rounded-full bg-red-400/20"
                           animate={{ scale: [1, 1.8, 1], opacity: [0.5, 0, 0.5] }}
                           transition={{ duration: 1.5, repeat: Infinity }}
-                          style={{ margin: "-10px" }}
+                          style={{ margin: "0px" }}
                         />
                         <motion.div
                           className="absolute inset-0 w-20 h-20 rounded-full bg-red-400/15"
                           animate={{ scale: [1, 2.2, 1], opacity: [0.3, 0, 0.3] }}
                           transition={{ duration: 1.5, repeat: Infinity, delay: 0.3 }}
-                          style={{ margin: "-10px" }}
+                          style={{ margin: "0px" }}
                         />
                         <motion.button
                           type="button"
